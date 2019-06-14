@@ -26,3 +26,15 @@ def id_exists(user_id):
         return True
     else:
         return False
+
+
+def get_password(user_id):
+    conn, cursor = connect_to_db()
+    r = """SELECT password FROM users WHERE id = '%s'""" % user_id
+    sql = cursor.execute(r)
+    response = sql.fetchall()
+    if len(response) > 0:
+        return response[0][0]
+    else:
+        return None
+

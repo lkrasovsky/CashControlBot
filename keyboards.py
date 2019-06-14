@@ -1,19 +1,19 @@
 from telebot import types
 
 
-def enter():
-    enter_keyboard = types.ReplyKeyboardMarkup()
-    enter_keyboard.row("Регистрация", "Вход")
+def login_or_register():
+    login_or_register_keyboard = types.ReplyKeyboardMarkup()
+    login_or_register_keyboard.row("Регистрация", "Вход")
 
-    return enter_keyboard
+    return login_or_register_keyboard
 
 
-def create_menu_keyboard():
-    menu_keyboard = types.ReplyKeyboardMarkup()
-    menu_keyboard.row("/start")
-    menu_keyboard.row("Пополнить 🔼", "Списать 🔽")
-    menu_keyboard.row("Баланс 💰")
-    menu_keyboard.row("Операции 📄")
-    menu_keyboard.row("О боте 🤖", "Разработчик 👼")
+def main_menu():
+    main_menu_keyboard = types.ReplyKeyboardMarkup()
+    main_menu_keyboard.row("/start")
+    main_menu_keyboard.row("Пополнить 🔼", "Списать 🔽")
+    main_menu_keyboard.row("Баланс 💰")
+    main_menu_keyboard.row("Операции 📄")
+    main_menu_keyboard.row("О боте 🤖", "Разработчик 👼")
 
-    return menu_keyboard
+    return main_menu_keyboard
