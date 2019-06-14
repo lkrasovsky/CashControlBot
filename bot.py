@@ -21,16 +21,16 @@ def message_handler(message):
     user_id: str = str(message.from_user.id)
 
     if message.text == "Регистрация":
-        if utils.id_exists():
+        if not utils.id_exists(user_id):
             bot.send_message(user_id,
                              "Ваш id - " + user_id + ". " + "Для того, чтобы установить пароль, введите:" +
                              "\n\npass - *ваш новый пароль*")
         else:
-            bot.send_message(user_id, "Пользователь с id " + user_id + "уже существует. ",
+            bot.send_message(user_id, "Пользователь с id " + user_id + " уже существует. ",
                              reply_markup=keyboards.enter())
 
     elif message.text == "Вход":
-        if utils.id_exists():
+        if utils.id_exists(user_id):
             bot.send_message(user_id, "Ваш id: " + user_id + ". " + "\n\nВведите пароль.")
 
     elif "pass" in message.text:

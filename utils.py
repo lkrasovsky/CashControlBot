@@ -17,6 +17,12 @@ def set_user(user_id, message):
     conn.commit()
 
 
-def id_exists():
+def id_exists(user_id):
     conn, cursor = connect_to_db()
-    # TODO check is id existing
+    r = """SELECT * FROM users WHERE id = '%s'""" % user_id
+    sql = cursor.execute(r)
+    response = sql.fetchall()
+    if len(response) > 0:
+        return True
+    else:
+        return False
