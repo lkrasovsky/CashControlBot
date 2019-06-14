@@ -38,3 +38,12 @@ def get_password(user_id):
     else:
         return None
 
+
+def get_money(user_id):
+    conn, cursor = connect_to_db()
+    r = """SELECT cash, card FROM users WHERE id = '%s'""" % user_id
+    sql = cursor.execute(r)
+    response = sql.fetchall()
+    cash = str(response[0][0])
+    card = str(response[0][1])
+    return cash, card

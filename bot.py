@@ -44,9 +44,13 @@ def message_handler(message):
     elif "pass" in message.text:
         password = re.search(r'\S+$', message.text).group(0)
         if password == utils.get_password(user_id):
-            bot.send_message(user_id, "Вы вошли в систему.")
+            bot.send_message(user_id, "Вы вошли в систему.", reply_markup=keyboards.main_menu())
         else:
             bot.send_message(user_id, "Неверный пароль. Повторите попытку.")
 
+    elif message.text == "Баланс 💰":
+        cash, card = utils.get_money(user_id)
+        bot.send_message(user_id, "Наличные: " + cash + "." +
+                         "\nКарта: " + card + ".")
 
 bot.polling(none_stop=True, interval=0)
