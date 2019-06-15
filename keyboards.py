@@ -11,8 +11,7 @@ def login_or_register():
 def main_menu():
     main_menu_keyboard = types.ReplyKeyboardMarkup()
     main_menu_keyboard.row("/start")
-    main_menu_keyboard.row("Новая операция")
-    main_menu_keyboard.row("Баланс 💰")
+    main_menu_keyboard.row("Новая операция", "Баланс 💰")
     main_menu_keyboard.row("Операции 📄")
     main_menu_keyboard.row("О боте 🤖", "Разработчик 👼")
 
