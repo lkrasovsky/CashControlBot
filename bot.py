@@ -21,7 +21,6 @@ def handle_start(message):
 @bot.message_handler(content_types=['text'])
 def message_handler(message):
     user_id: str = str(message.from_user.id)
-
     if message.text == "Регистрация":
         if not utils.id_exists(user_id):
             bot.send_message(user_id,
@@ -48,9 +47,74 @@ def message_handler(message):
         else:
             bot.send_message(user_id, "Неверный пароль. Повторите попытку.")
 
-    elif message.text == "Баланс 💰":
+    elif message.text == "Новая операция":
+        bot.send_message(user_id, "Выберите операцию.", reply_markup=keyboards.operations())
+
+    # FOR CASH
+    elif message.text == "Пополнить 💵":
+        bot.send_message(user_id, "Введите сумму:"
+                                  "\n\n+$ *ваша сумма*")
+
+    elif "+$" in message.text:
+        sum = float(re.search(r'\S+$', message.text).group(0))
+        result = utils.add_cash(user_id, sum)
         cash, card = utils.get_money(user_id)
-        bot.send_message(user_id, "Наличные: " + cash + "." +
-                         "\nКарта: " + card + ".")
+        bot.send_message(user_id, result +
+                         "\n\nТекущий баланс: " +
+                         "\nНаличные - " + str(cash) +
+                         "\nКарта - " + str(card))
+
+    elif message.text == "Списать 💵":
+        bot.send_message(user_id, "Введите сумму:"
+                                  "\n\n-$ *ваша сумма*")
+
+    elif "-$" in message.text:
+        sum = float(re.search(r'\S+$', message.text).group(0))
+        result = utils.subtract_cash(user_id, sum)
+        cash, card = utils.get_money(user_id)
+        bot.send_message(user_id, result +
+                         "\n\nТекущий баланс: " +
+                         "\nНаличные - " + str(cash) +
+                         "\nКарта - " + str(card))
+
+    elif message.text == "Изменить 💵":
+        pass
+
+    # FOR CARD
+    elif message.text == "Пополнить 💳":
+        bot.send_message(user_id, "Введите сумму:"
+                                  "\n\n++ *ваша сумма*")
+
+    elif "++" in message.text:
+        sum = float(re.search(r'\S+$', message.text).group(0))
+        result = utils.add_card(user_id, sum)
+        cash, card = utils.get_money(user_id)
+        bot.send_message(user_id, result +
+                         "\n\nТекущий баланс: " +
+                         "\nНаличные - " + str(cash) +
+                         "\nКарта - " + str(card))
+
+    elif message.text == "Списать 💳":
+        bot.send_message(user_id, "Введите сумму:"
+                                  "\n\n-- *ваша сумма*")
+
+    elif "--" in message.text:
+        sum = float(re.search(r'\S+$', message.text).group(0))
+        result = utils.subtract_card(user_id, sum)
+        cash, card = utils.get_money(user_id)
+        bot.send_message(user_id, result +
+                         "\n\nТекущий баланс: " +
+                         "\nНаличные - " + str(cash) +
+                         "\nКарта - " + str(card))
+
+    elif message.text == "Изменить 💳":
+        pass
+
+
+    elif message.text == "Баланс 💰":
+        cash, card = str(utils.get_money(user_id))
+        bot.send_message(user_id, "Наличные: " + str(cash) + "." +
+                         "\nКарта: " + str(card) + ".")
+
 
 bot.polling(none_stop=True, interval=0)

@@ -44,6 +44,58 @@ def get_money(user_id):
     r = """SELECT cash, card FROM users WHERE id = '%s'""" % user_id
     sql = cursor.execute(r)
     response = sql.fetchall()
-    cash = str(response[0][0])
-    card = str(response[0][1])
+    cash = float(response[0][0])
+    card = float(response[0][1])
     return cash, card
+
+
+def add_cash(user_id, sum):
+    cash, card = get_money(user_id)
+    result = float(cash + sum)
+
+    conn, cursor = connect_to_db()
+    cursor.executescript("""UPDATE users SET cash='%s' WHERE id='%s'""" % (result, user_id))
+    return "Успешно!"
+
+
+def subtract_cash(user_id, sum):
+    cash, card = get_money(user_id)
+    if cash >= sum:
+        result = float(cash - sum)
+
+        conn, cursor = connect_to_db()
+        cursor.executescript("""UPDATE users SET cash='%s' WHERE id='%s'""" % (result, user_id))
+
+        return "Успешно!"
+    else:
+        return "Не достаточно средств."
+
+
+def edit_cash(user_id, sum):
+    pass
+
+
+def add_card(user_id, sum):
+    cash, card = get_money(user_id)
+    result = float(card + sum)
+
+    conn, cursor = connect_to_db()
+    cursor.executescript("""UPDATE users SET card='%s' WHERE id='%s'""" % (result, user_id))
+    return "Успешно!"
+
+
+def subtract_card(user_id, sum):
+    cash, card = get_money(user_id)
+    if card >= sum:
+        result = float(card - sum)
+
+        conn, cursor = connect_to_db()
+        cursor.executescript("""UPDATE users SET card='%s' WHERE id='%s'""" % (result, user_id))
+
+        return "Успешно!"
+    else:
+        return "Не достаточно средств."
+
+
+def edit_card(user_id, sum):
+    pass
